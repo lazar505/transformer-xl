@@ -1,34 +1,34 @@
-# Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context
+# Text generation with Transformer-XL
+Transformer-XL implementation in Python and TensorFlow from
+https://github.com/kimiyoung/transformer-xl adapted for text generation.
+The code allows training of the transformer on a custom dataset
+and interactive text generation with the transformer using
+command line interface or web browser.
 
-This repository contains the code in both **PyTorch** and **TensorFlow** for our paper
->[Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context](http://arxiv.org/abs/1901.02860)
+## Setup
 
->Zihang Dai\*, Zhilin Yang\*, Yiming Yang, Jaime Carbonell, Quoc V. Le, Ruslan Salakhutdinov (*: equal contribution)
+Run `bash install_venv.sh` to create a python virtual environment
+and install required packages that are listed in `requirements.txt`.
 
->Preprint 2018
+Make following changes in `run_command.sh` file:
+- Set `RAW_DATA` to a zip file path that contains the raw dataset.
+- Set `DATA_ROOT` to a directory path where the dataset is going be stored.
+- Set `MODEL_ROOT` to a directory path where the trained model is going be saved.
+- Set the desired model parameters.
 
-## TensorFlow
+## Commands
 
-- The source code is in the `tf/` folder, supporting (1) single-node multi-gpu training, and (2) multi-host TPU training.
-- Besides the source code, we also provide pretrained "TensorFlow" models with state-of-the-art (SoTA) performances reported in the paper.
-- Please refer to `tf/README.md` for details.
+Run `bash run_command.sh command_name` to execute a command with name `command_name`.
+Possible options for `command_name` are:
 
-## PyTorch
-
-- The source code is in the `pytorch/` folder, supporting single-node multi-gpu training via the module `nn.DataParallel`.
-- Please refer to `pytorch/README.md` for details.
-
-## Results
-
-Transformer-XL achieves new state-of-the-art results on multiple language modeling benchmarks. Transformer-XL is also the first to break through the 1.0 barrier on char-level language modeling. Below is a summary.
-
-Method | enwiki8 | text8 | One Billion Word | WT-103 | PTB (w/o finetuning)
--- | -- | -- | -- | -- | -- 
-Previous Best | 1.06 | 1.13 | 23.7 | 20.5 | 55.5
-Transformer-XL | **0.99** | **1.08** | **21.8** | **18.3** | **54.5**
-
-
-
-## Acknowledgement
-
-A large portion of the `getdata.sh` script comes from the [awd-lstm](https://github.com/salesforce/awd-lstm-lm/) repo. Happy Language Modeling :)
+- `make_data` - read the raw dataset and create `train.txt`, `valid.txt`, and `train.txt`
+that contain the dataset.
+- `train_data` or `test_data` - convert the dataset to tfrecords.
+- `vocab` - print the vocabulary to a file.
+- `train` - train the transformer.
+- `eval` - evaluate the transformer.
+- `gen` - start interactive text generation with the transformer.
+- `web` - start a web server that provides interactive text generation.
+- `make_experiment_data` - create a csv file with one column where each row
+has text with specified number of sentences.
+- `experiment` - generate continuations for the sentences in the csv file.
